@@ -1,0 +1,28 @@
+version: 0.0
+os: linux
+
+files:
+  - source: /
+    destination: /home/ec2-user/app
+    overwrite: yes
+
+hooks:
+  ApplicationStop:
+    - location: deploy-scripts/stop.sh
+      runas: ec2-user
+      timeout: 60
+
+  BeforeInstall:
+    - location: deploy-scripts/before_install.sh
+      timeout: 120
+      runas: root
+
+  ApplicationStart:
+    - location: deploy-scripts/start.sh
+      timeout: 120
+      runas: ec2-user
+
+  ValidateService:
+    - location: deploy-scripts/validate.sh
+      timeout: 60
+      runas: ec2-user
