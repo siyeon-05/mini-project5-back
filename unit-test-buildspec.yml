@@ -1,0 +1,14 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      java: corretto21
+    commands:
+      - chmod +x ./gradlew
+      - ./gradlew --version
+
+  build:
+    commands:
+      # ✅ 유닛 테스트 실행 (실패하면 CodeBuild/파이프라인이 여기서 중단됨)
+      - ./gradlew clean test
